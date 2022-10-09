@@ -76,7 +76,7 @@ class ValidatorImplTest {
         Exception exception = Assertions.assertThrows(Exception.class, () -> {
             validatorImpl.lowerCaseValidator("PASSWORD1");
         });
-        assertTrue(exception.getMessage().contentEquals("password should have one uppercase letter at least"));
+        assertTrue(exception.getMessage().contentEquals("password should have one lowercase letter at least"));
     }
 
     @Test
@@ -84,6 +84,31 @@ class ValidatorImplTest {
     void lowerCaseValidationFailureWithNull(){
         Exception exception = Assertions.assertThrows(Exception.class, () -> {
             validatorImpl.lowerCaseValidator(null);
+        });
+        assertTrue(exception.getMessage().contentEquals("password should not be null"));
+    }
+
+    @Test
+    @DisplayName("Password should contain atleast one digit")
+    void digitValidationSuccess() throws Exception{
+        boolean actual = validatorImpl.digitValidator("Password1");
+        Assertions.assertTrue(actual);
+    }
+
+    @Test
+    @DisplayName("Should throw exception if password does not contain a digit")
+    void digitValidationFailure(){
+        Exception exception = Assertions.assertThrows(Exception.class, () -> {
+            validatorImpl.digitValidator("Password");
+        });
+        assertTrue(exception.getMessage().contentEquals("password should have one number at least"));
+    }
+
+    @Test
+    @DisplayName("Should throw exception if password is null before validating for digit")
+    void digitValidationFailureWithNull(){
+        Exception exception = Assertions.assertThrows(Exception.class, () -> {
+            validatorImpl.digitValidator(null);
         });
         assertTrue(exception.getMessage().contentEquals("password should not be null"));
     }

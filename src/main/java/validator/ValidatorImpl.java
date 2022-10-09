@@ -44,6 +44,21 @@ public class ValidatorImpl implements Validator {
         if(hasLowerCase)
             return true;
         else
-            throw new Exception("password should have one uppercase letter at least");
+            throw new Exception("password should have one lowercase letter at least");
+    }
+
+    @Override
+    public boolean digitValidator(String password) throws Exception {
+        boolean hasDigit = false;
+        nullValidator(password);
+        for(int i = 0; i<password.length(); i++){
+            char ch = password.charAt(i);
+            if(Character.isDigit(ch))
+                hasDigit = true;
+        }
+        if(hasDigit)
+            return true;
+        else
+            throw new Exception("password should have one number at least");
     }
 }
