@@ -1,5 +1,10 @@
 package validator;
 
+import tasks.DigitValidatorTask;
+import tasks.LowerCaseValidatorTask;
+import tasks.NullValidatorTask;
+import tasks.UpperCaseValidatorTask;
+
 import java.util.concurrent.*;
 
 public class ValidationHandlerImpl implements ValidationHandler {
@@ -35,10 +40,10 @@ public class ValidationHandlerImpl implements ValidationHandler {
            return errorMessage.append(ex.getMessage()).toString();
         }
 
-        NullValidatorTask nullTask = new NullValidatorTask(password.toString());
-        UpperCaseValidatorTask upperCaseTask = new UpperCaseValidatorTask(password.toString());
-        LowerCaseValidatorTask lowerCaseTask = new LowerCaseValidatorTask(password.toString());
-        DigitValidatorTask digitCaseTask = new DigitValidatorTask(password.toString());
+        NullValidatorTask nullTask = new NullValidatorTask(password.toString(), validator);
+        UpperCaseValidatorTask upperCaseTask = new UpperCaseValidatorTask(password.toString(), validator);
+        LowerCaseValidatorTask lowerCaseTask = new LowerCaseValidatorTask(password.toString(), validator);
+        DigitValidatorTask digitCaseTask = new DigitValidatorTask(password.toString(), validator);
         ExecutorService executorService
                 = Executors.newFixedThreadPool(4);
         Future<Boolean> nullValidation
@@ -88,76 +93,5 @@ public class ValidationHandlerImpl implements ValidationHandler {
 
     private boolean mandatoryValidation(Object password) throws Exception {
         return validator.lengthValidator(password.toString());
-    }
-
-    class NullValidatorTask implements Callable<Boolean> {
-        // Member variable of this class
-        private String message;
-
-        // Constructor of this class
-        public NullValidatorTask(String message) {
-            // This keyword refers to current instance itself
-            this.message = message;
-        }
-
-        // Method of this Class
-        public Boolean call() throws Exception {
-          return validator.nullValidator(message);
-
-        }
-    }
-
-    class UpperCaseValidatorTask implements Callable<Boolean> {
-        // Member variable of this class
-        private String message;
-
-        // Constructor of this class
-        public UpperCaseValidatorTask(String message) {
-            // This keyword refers to current instance itself
-            this.message = message;
-        }
-
-        // Method of this Class
-        public Boolean call() throws Exception {
-            try{
-                return validator.upperCaseValidator(message);
-            }catch (Exception ex){
-                throw ex;
-            }
-        }
-    }
-
-    class LowerCaseValidatorTask implements Callable<Boolean> {
-        // Member variable of this class
-        private String message;
-
-        // Constructor of this class
-        public LowerCaseValidatorTask(String message) {
-            // This keyword refers to current instance itself
-            this.message = message;
-        }
-
-        // Method of this Class
-        public Boolean call() throws Exception {
-            return validator.lowerCaseValidator(message);
-
-        }
-    }
-
-    class DigitValidatorTask implements Callable<Boolean> {
-        // Member variable of this class
-        private String message;
-
-        // Constructor of this class
-        public DigitValidatorTask(String message) {
-            // This keyword refers to current instance itself
-            this.message = message;
-        }
-
-        // Method of this Class
-        public Boolean call() throws Exception {
-            return validator.digitValidator(message);
-
-        }
     }
 }
