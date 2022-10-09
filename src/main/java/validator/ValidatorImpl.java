@@ -8,4 +8,12 @@ public class ValidatorImpl implements Validator {
         else
             return true;
     }
+
+    @Override
+    public boolean nullValidator(Object password) throws Exception {
+        if(password == null)
+            throw  new Exception("password should not be null");
+        else
+            return true;
+    }
 }
