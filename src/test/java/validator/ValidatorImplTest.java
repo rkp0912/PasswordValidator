@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ValidatorImplTest {
-    ValidatorImpl validatorImpl = new ValidatorImpl();
+    Validator validatorImpl = new ValidatorImpl();
     @Test
     @DisplayName("Password length must be larger than 8 characters")
     void lengthValidationSuccess() throws Exception {
@@ -56,12 +56,35 @@ class ValidatorImplTest {
     }
 
     @Test
-    @DisplayName("Should throw exception if password is null")
+    @DisplayName("Should throw exception if password is null before validating upper case")
     void upperCaseValidationFailureWithNull(){
         Exception exception = Assertions.assertThrows(Exception.class, () -> {
             validatorImpl.upperCaseValidator(null);
         });
         assertTrue(exception.getMessage().contentEquals("password should not be null"));
     }
+    @Test
+    @DisplayName("Password should contain atleast one lower case character")
+    void lowerCaseValidationSuccess() throws Exception{
+        boolean actual = validatorImpl.lowerCaseValidator("Password1");
+        Assertions.assertTrue(actual);
+    }
 
+    @Test
+    @DisplayName("Should throw exception if password does not contain lower case character")
+    void lowerCaseValidationFailure(){
+        Exception exception = Assertions.assertThrows(Exception.class, () -> {
+            validatorImpl.lowerCaseValidator("PASSWORD1");
+        });
+        assertTrue(exception.getMessage().contentEquals("password should have one uppercase letter at least"));
+    }
+
+    @Test
+    @DisplayName("Should throw exception if password is null before validating lower case")
+    void lowerCaseValidationFailureWithNull(){
+        Exception exception = Assertions.assertThrows(Exception.class, () -> {
+            validatorImpl.lowerCaseValidator(null);
+        });
+        assertTrue(exception.getMessage().contentEquals("password should not be null"));
+    }
 }
