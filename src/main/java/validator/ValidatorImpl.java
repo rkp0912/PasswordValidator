@@ -16,4 +16,19 @@ public class ValidatorImpl implements Validator {
         else
             return true;
     }
+
+    @Override
+    public boolean upperCaseValidator(String password) throws Exception {
+        boolean hasUpperCase = false;
+        nullValidator(password);
+        for(int i = 0; i<password.length(); i++){
+            char ch = password.charAt(i);
+            if(Character.isUpperCase(ch))
+                hasUpperCase = true;
+        }
+        if(hasUpperCase)
+            return true;
+        else
+            throw new Exception("password should have one uppercase letter at least");
+    }
 }

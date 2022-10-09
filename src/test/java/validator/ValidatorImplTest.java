@@ -38,4 +38,30 @@ class ValidatorImplTest {
         });
         assertTrue(exception.getMessage().contentEquals("password should not be null"));
     }
+
+    @Test
+    @DisplayName("Password should contain atleast one upper case character")
+    void upperCaseValidationSuccess() throws Exception{
+        boolean actual = validatorImpl.upperCaseValidator("Password1");
+        Assertions.assertTrue(actual);
+    }
+
+    @Test
+    @DisplayName("Should throw exception if password does not contain upper case character")
+    void upperCaseValidationFailure(){
+        Exception exception = Assertions.assertThrows(Exception.class, () -> {
+            validatorImpl.upperCaseValidator("password1");
+        });
+        assertTrue(exception.getMessage().contentEquals("password should have one uppercase letter at least"));
+    }
+
+    @Test
+    @DisplayName("Should throw exception if password is null")
+    void upperCaseValidationFailureWithNull(){
+        Exception exception = Assertions.assertThrows(Exception.class, () -> {
+            validatorImpl.upperCaseValidator(null);
+        });
+        assertTrue(exception.getMessage().contentEquals("password should not be null"));
+    }
+
 }
