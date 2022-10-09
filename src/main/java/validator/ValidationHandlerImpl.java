@@ -25,10 +25,10 @@ public class ValidationHandlerImpl implements ValidationHandler{
         errorMessage.append("Password Invalid:\n");
         Integer countOfSuccessfulValidations = 0;
         try{
-            validator.lengthValidator(password.toString());
+            mandatoryValidation(password.toString());
             countOfSuccessfulValidations++;
         }catch (Exception ex){
-            errorMessage.append(ex.getMessage()+"\n");
+           return errorMessage.append(ex.getMessage()).toString();
         }
 
         try{
@@ -65,5 +65,9 @@ public class ValidationHandlerImpl implements ValidationHandler{
         else
             return errorMessage.toString();
 
+    }
+
+    private boolean mandatoryValidation(Object password) throws Exception{
+        return validator.lengthValidator(password.toString());
     }
 }
