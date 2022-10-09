@@ -36,4 +36,22 @@ class ValidationHandlerImplTest {
         String actual =  validationHandler.validate("Passwordd");
         Assertions.assertTrue(actual.contentEquals("password should have one number at least"));
     }
+
+    @Test
+    @DisplayName("Password validation with minimum successful conditions Successful")
+    void validateHandlerWithMinSuccessConditionSuccess(){
+        String actual =  validationHandler.validate("Passwordd", 3);
+        Assertions.assertTrue(actual.contentEquals("Password Valid"));
+    }
+
+    @Test
+    @DisplayName("Password validation with minimum successful conditions Failure")
+    void validateHandlerWithMinSuccessConditionFailure(){
+        String actual =  validationHandler.validate("passwor", 3);
+        Assertions.assertTrue(actual.contentEquals(
+                "Password Invalid:\n"+
+                "password should be larger than 8 chars\n" +
+                "password should have one uppercase letter at least\n" +
+                "password should have one number at least"));
+    }
 }

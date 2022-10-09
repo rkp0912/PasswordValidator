@@ -19,7 +19,7 @@ public class PasswordValidator {
                 System.out.println(e);
             }
             if(!name.equals("0"))
-                System.out.println(validationHandler.validate(name));
+                System.out.println(validationHandler.validate(name, 3));
         }
     }
 }
