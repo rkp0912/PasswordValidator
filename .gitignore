@@ -3,3 +3,6 @@
 
 #Ignore editor settings
 .idea/
+
+#Ignore binaries
+target/
